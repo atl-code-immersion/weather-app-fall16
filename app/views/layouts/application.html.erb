@@ -8,7 +8,22 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
+  <% if @results != nil %>
+  	<% if @results[:weather_words] == "Clear" || @results[:weather_words] == "Sunny" %>
+  		<body id="sunny">
+  	<% elsif @results[:weather_words] == "Partly Cloudy" || @results[:weather_words] == "Mostly Cloudy" || @results[:weather_words] == "Overcast" %>
+  		<body id="cloudy">
+    <% elsif @rainy_conditions.include?(@results[:weather_words]) %>
+      <body id="rainy">
+    <% elsif @snowy_conditions.include?(@results[:weather_words]) %>
+      <body id="snowy">
+    <% else %>
+    	<body>
+    <% end %>
+  <% else %>
+    <body>
+  <% end %>
+
     <%= yield %>
   </body>
 </html>
